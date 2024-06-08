@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "hcWDE9mfreJ3d1j6a5cNVFjQaSqY0if0FHnvJ9EA8nEsJ54X/+UzH2brE/+amrJe6q4RcpSTmMEqU/eWzZKzVw==",
+  "success": true,
+  "projectFilePath": "D:\\Projetos\\CSharp\\WinFormsApp\\WinFormsApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ewert\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\ewert\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\ewert\\.nuget\\packages\\npgsql\\8.0.3\\npgsql.8.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
