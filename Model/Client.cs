@@ -36,6 +36,28 @@ namespace WinFormsApp.Model {
             return dataTable;
         }
 
+        public static List<Client> GetAllClients() {
+            List<Client> clients = new List<Client>();
+            dbConfig db = new dbConfig();
+
+            string query = "SELECT * FROM clients";
+
+            DataTable dataTable = db.ExecuteQuery(query);
+
+            foreach (DataRow row in dataTable.Rows) {
+                int id = Convert.ToInt32(row["id"]);
+                string name = row["name"].ToString();
+                string phone = row["phone"].ToString();
+                string address = row["address"].ToString();
+                string email = row["email"].ToString();
+
+                Client client = new Client(id, name, phone, address, email);
+                clients.Add(client);
+            }
+
+            return clients;
+        }
+
         public static Client GetClientById(int id) {
             dbConfig db = new dbConfig();
 

@@ -13,6 +13,9 @@
     <Compile Update="View\FrmClient.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="View\FrmInputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="View\FrmProduct.cs">
       <SubType>Form</SubType>
     </Compile>

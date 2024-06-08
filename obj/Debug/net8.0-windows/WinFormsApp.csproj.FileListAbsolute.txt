@@ -26,3 +26,5 @@ D:\Projetos\CSharp\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.View.FrmDash
 D:\Projetos\CSharp\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.View.FrmNovoUsuario.resources
 D:\Projetos\CSharp\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.View.FrmCRUDProduct.resources
 D:\Projetos\CSharp\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.View.FrmSaleItem.resources
+D:\Projetos\CSharp\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.sourcelink.json
+D:\Projetos\CSharp\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.View.FrmInputBox.resources
