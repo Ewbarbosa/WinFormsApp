@@ -30,6 +30,7 @@ namespace WinFormsApp.Model {
             this.product = product;
         }
 
+        // retorna uma lista de produtos
         public static List<Product> GetAllProducts() {
             List<Product> products = new List<Product>();
             dbConfig db = new dbConfig();
@@ -52,7 +53,8 @@ namespace WinFormsApp.Model {
             return products;
         }
 
-        public static DataTable Load() {            
+        // retorna uma datatable de produtos
+        public static DataTable Load() {
             dbConfig db = new dbConfig();
 
             string query = "SELECT * FROM products";
@@ -62,6 +64,7 @@ namespace WinFormsApp.Model {
             return dataTable;
         }
 
+        // obtem um produto atraves do ID
         public static Product GetProductById(int id) {
             dbConfig db = new dbConfig();
 
@@ -86,7 +89,7 @@ namespace WinFormsApp.Model {
             return null;
         }
 
-        public static void Insert(string description, string brand, decimal price, int stock){
+        public static void Insert(string description, string brand, decimal price, int stock) {
             dbConfig db = new dbConfig();
             string query = "insert into products (description, brand, price, stock) values (@description, @brand, @price, @stock)";
 
@@ -95,6 +98,7 @@ namespace WinFormsApp.Model {
             db.ExecuteQueryWithParameters(query, paramters);
         }
 
+        // atualiza o produto
         public static void Update(int id, string description, string brand, decimal price, int stock) {
             dbConfig db = new dbConfig();
             string query = "update products set description = @description, brand = @brand, price = @price, stock = @stock where id = @id";
@@ -104,6 +108,18 @@ namespace WinFormsApp.Model {
             db.ExecuteQueryWithParameters(query, paramters);
         }
 
+        // atualiza o estoque de um produto
+        public static void UpdateStock(int id, int stock) {
+            dbConfig db = new dbConfig();
+
+            string query = "update products set stock = stock - @stock where id = @id";
+
+            var paramters = new (string, object)[] { ("id", id), ("stock", stock) };
+
+            db.ExecuteQueryWithParameters(query, paramters);
+        }
+
+        //apaga um produto
         public static void Delete(int id) {
             dbConfig db = new dbConfig();
 

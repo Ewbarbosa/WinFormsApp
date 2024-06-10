@@ -22,6 +22,7 @@ namespace WinFormsApp.Model {
             Password = password;
         }
 
+        // obtem todos os users
         public static List<User> GetAllUsers() {
             List<User> users = new List<User>();
             dbConfig db = new dbConfig();
@@ -42,6 +43,7 @@ namespace WinFormsApp.Model {
             return users;
         }
 
+        // obtem um user
         public static User GetUser(string login, string pass) {
 
             dbConfig db = new dbConfig();
@@ -64,6 +66,7 @@ namespace WinFormsApp.Model {
             return null;
         }
 
+        // inserçao de um usuário no banco
         public static void InsertUser(string username, string password) {
             dbConfig db = new dbConfig();
             string query = "INSERT INTO Users (username, password) VALUES (@username, @password)";
@@ -72,6 +75,7 @@ namespace WinFormsApp.Model {
             db.ExecuteQueryWithParameters(query, parameters);
         }
 
+        // atualiza um user
         public void UpdateUser() {
             dbConfig db = new dbConfig();
             string query = "UPDATE Users SET user = @username, password = @password WHERE id = @id";
@@ -80,6 +84,7 @@ namespace WinFormsApp.Model {
             db.ExecuteQueryWithParameters(query, parameters);
         }
 
+        // apaga um user
         public static void DeleteUser(int id) {
             dbConfig db = new dbConfig();
             string query = "DELETE FROM Users WHERE id = @id";

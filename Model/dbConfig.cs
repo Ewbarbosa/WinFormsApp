@@ -4,8 +4,10 @@ using System.Data;
 namespace WinFormsApp.Model {
     public class dbConfig {
 
+        // configuração do banco de dados
         string connection = "Host=127.0.0.1;Port=5432;Username=postgres;Password=43908701;Database=dbSystem";
 
+        // executa uma query sem parametros
         public DataTable ExecuteQuery(string query, params NpgsqlParameter[] parameters) {
 
             DataTable dt = new DataTable();
@@ -30,6 +32,7 @@ namespace WinFormsApp.Model {
             return dt;
         }
 
+        // executa uma query com parametros
         public DataTable ExecuteQueryWithParameters(string query, params (string, object)[] parameters) {
 
             DataTable dt = new DataTable();

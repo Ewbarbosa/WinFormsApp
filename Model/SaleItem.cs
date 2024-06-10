@@ -21,8 +21,17 @@ namespace WinFormsApp.Model {
             Price = price;
         }
 
+        public SaleItem(int sale_Id, int product_Id, int quantity, decimal price) {            
+            Sale_Id = sale_Id;
+            Product_Id = product_Id;
+            Quantity = quantity;
+            Price = price;
+        }
+
         public SaleItem() { }
 
+        // insert de registro no banco
+        // salva um item relacionado a uma venda
         public static void Insert(int sale_id, int product_id, int quantity, decimal price) {
             dbConfig db = new dbConfig();
             string query = "insert into saleitem (sale_id, product_id, quantity, price) values (@sale_id, @product_id, @quantity, @price)";
@@ -32,6 +41,7 @@ namespace WinFormsApp.Model {
             db.ExecuteQueryWithParameters(query, paramters);
         }
 
+        // obtem uma lista de items relacionado a uma venda
         public static List<SaleItem> GetSaleItems(int sale_id) {
             List<SaleItem> list = new List<SaleItem>();
             dbConfig db = new dbConfig();

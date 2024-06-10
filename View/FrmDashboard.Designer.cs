@@ -33,6 +33,8 @@
             produtoToolStripMenuItem = new ToolStripMenuItem();
             vendaToolStripMenuItem = new ToolStripMenuItem();
             novoToolStripMenuItem = new ToolStripMenuItem();
+            relatóriosToolStripMenuItem = new ToolStripMenuItem();
+            vendaToolStripMenuItem1 = new ToolStripMenuItem();
             contextMenuStrip2.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -62,7 +64,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { testeToolStripMenuItem1, produtoToolStripMenuItem, vendaToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { testeToolStripMenuItem1, produtoToolStripMenuItem, vendaToolStripMenuItem, relatóriosToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(902, 24);
@@ -93,9 +95,23 @@
             // novoToolStripMenuItem
             // 
             novoToolStripMenuItem.Name = "novoToolStripMenuItem";
-            novoToolStripMenuItem.Size = new Size(180, 22);
+            novoToolStripMenuItem.Size = new Size(103, 22);
             novoToolStripMenuItem.Text = "Novo";
             novoToolStripMenuItem.Click += novoToolStripMenuItem_Click;
+            // 
+            // relatóriosToolStripMenuItem
+            // 
+            relatóriosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { vendaToolStripMenuItem1 });
+            relatóriosToolStripMenuItem.Name = "relatóriosToolStripMenuItem";
+            relatóriosToolStripMenuItem.Size = new Size(71, 20);
+            relatóriosToolStripMenuItem.Text = "Relatórios";
+            // 
+            // vendaToolStripMenuItem1
+            // 
+            vendaToolStripMenuItem1.Name = "vendaToolStripMenuItem1";
+            vendaToolStripMenuItem1.Size = new Size(180, 22);
+            vendaToolStripMenuItem1.Text = "Venda";
+            vendaToolStripMenuItem1.Click += vendaToolStripMenuItem1_Click;
             // 
             // FrmDashboard
             // 
@@ -126,5 +142,7 @@
         private ToolStripMenuItem produtoToolStripMenuItem;
         private ToolStripMenuItem vendaToolStripMenuItem;
         private ToolStripMenuItem novoToolStripMenuItem;
+        private ToolStripMenuItem relatóriosToolStripMenuItem;
+        private ToolStripMenuItem vendaToolStripMenuItem1;
     }
 }

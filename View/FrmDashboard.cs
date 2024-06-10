@@ -33,5 +33,10 @@ namespace WinFormsApp.View {
             FrmSaleItem frm = new FrmSaleItem();
             frm.ShowDialog();
         }
+
+        private void vendaToolStripMenuItem1_Click(object sender, EventArgs e) {
+            FrmRelSale frm = new FrmRelSale();
+            frm.ShowDialog();
+        }
     }
 }

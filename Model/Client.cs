@@ -26,6 +26,7 @@ namespace WinFormsApp.Model {
 
         public Client() { }
 
+        // carrega todos os clientes
         public static DataTable Load() {
             dbConfig db = new dbConfig();
 
@@ -36,6 +37,7 @@ namespace WinFormsApp.Model {
             return dataTable;
         }
 
+        // retorna uma lista de clientes
         public static List<Client> GetAllClients() {
             List<Client> clients = new List<Client>();
             dbConfig db = new dbConfig();
@@ -58,6 +60,7 @@ namespace WinFormsApp.Model {
             return clients;
         }
 
+        // obtem um cliente atraves do id
         public static Client GetClientById(int id) {
             dbConfig db = new dbConfig();
 
@@ -82,6 +85,8 @@ namespace WinFormsApp.Model {
             return null;
         }
 
+        // adiciona um cliente
+
         public static void Insert(string name, string phone, string address, string email) {
             dbConfig db = new dbConfig();
             string query = "insert into clients (name, phone, address, email) values (@name, @phone, @address, @email)";
@@ -90,6 +95,8 @@ namespace WinFormsApp.Model {
 
             db.ExecuteQueryWithParameters(query, paramters);
         }
+
+        // atualiza um cliente
         public static void Update(int id, string name, string phone, string address, string email) {
             dbConfig db = new dbConfig();
             string query = "update clients set name = @name, phone = @phone, address = @address, email = @email where id = @id";
@@ -99,6 +106,7 @@ namespace WinFormsApp.Model {
             db.ExecuteQueryWithParameters(query, paramters);
         }
 
+        // apaga um cliente
         public static void Delete(int id) {
             dbConfig db = new dbConfig();
 

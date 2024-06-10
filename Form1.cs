@@ -16,21 +16,14 @@ namespace WinFormsApp {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            //LoadData(textUser.Text, textPass.Text);
 
-            //List<User> users = User.GetAllUsers();
-            //User.DeleteUser(1);
-            //MessageBox.Show(users[0].Username);
+            // validação simples sem criar uma senha criptografada
 
-            //if (textUser.Text == "admin" || textPass.Text == "admin") {
-            //    this.Close();
-            //    Dashboard dashboard = new Dashboard();
-            //    dashboard.Show();
-            //} else {
-            //    MessageBox.Show("Usuário e senha incorretos!");
-            //}
+            string username = textUser.Text;
+            string password = textPass.Text;
 
-            User user = User.GetUser(textUser.Text, textPass.Text);
+
+            User user = User.GetUser(username, password);
             if (user == null) {
                 MessageBox.Show("Usuário/Senha inválido!"); ;
             } else {

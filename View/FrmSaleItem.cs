@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp.Model;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WinFormsApp.View {
     public partial class FrmSaleItem : Form {
@@ -18,6 +19,9 @@ namespace WinFormsApp.View {
 
         // Lista para armazenar abas escondidas
         private List<TabPage> hiddenTabPages = new List<TabPage>();
+        private Client client;
+        private Sale sale;
+        private List<SaleItem> saleItems = new List<SaleItem>();
 
         private void button1_Click(object sender, EventArgs e) {
             string search = textBox1.Text.ToLower();
@@ -31,6 +35,7 @@ namespace WinFormsApp.View {
             dataGridViewProduct.DataSource = dt;
         }
 
+        // converto uma Lista em DataTable
         public static DataTable ConvertToDataTable<T>(List<T> items) {
             DataTable dataTable = new DataTable(typeof(T).Name);
 
@@ -66,6 +71,7 @@ namespace WinFormsApp.View {
             dataGridViewClient.DataSource = dt;
         }
 
+        // escondo uma aba
         private void HidePage(TabPage tabPage) {
             if (tabControl.TabPages.Contains(tabPage)) {
                 hiddenTabPages.Add(tabPage);
@@ -73,6 +79,7 @@ namespace WinFormsApp.View {
             }
         }
 
+        // exibo uma aba
         private void ShowPage(TabPage tabPage) {
             if (hiddenTabPages.Contains(tabPage)) {
                 tabControl.TabPages.Add(tabPage);
@@ -82,12 +89,21 @@ namespace WinFormsApp.View {
 
         private void FrmSaleItem_Load(object sender, EventArgs e) {
             HidePage(tabProduct);
+            HidePage(tabPayment);
         }
 
         private void button4_Click(object sender, EventArgs e) {
             if (labelID.Text != "") {
-                // inicia uma venda relacionada ao cliente com o valor zerado
-                Sale sale = Sale.Insert(int.Parse(labelID.Text), 0);
+
+                int id = int.Parse(labelID.Text);
+                string name = labelName.Text;
+                string address = labelAddress.Text;
+                string phone = labelPhone.Text;
+                string email = labelEmail.Text;
+
+                client = new Client(id, name, address, phone, email);
+
+                sale = Sale.Insert(id, 0, "Pendente");
 
                 labelSaleId.Text = sale.Id.ToString();
 
@@ -130,27 +146,114 @@ namespace WinFormsApp.View {
 
             if (frm.ShowDialog() == DialogResult.OK) {
 
-                int input = int.Parse(frm.InputValue);
+                if (frm.InputValue != "") {
 
-                if (input > 0) {
-                    int saleId = int.Parse(labelSaleId.Text);
-                    int productId = int.Parse(dataGridViewProduct.Rows[e.RowIndex].Cells[0].Value.ToString());
-                    decimal price = decimal.Parse(dataGridViewProduct.Rows[e.RowIndex].Cells[3].Value.ToString());
+                    int quantity = int.Parse(frm.InputValue);
 
-                    try {
-                        SaleItem.Insert(saleId, productId, input, price);
-                        MessageBox.Show("Item adicionado!");
-                        List<SaleItem> saleItems = SaleItem.GetSaleItems(saleId);
-                        DataTable dt = ConvertToDataTable(saleItems);
-                        dataGridViewSale.DataSource = dt;
-                    } catch (Exception ex) {
-                        MessageBox.Show("Erro: " + ex.Message);
+                    if (quantity > 0) {
+
+                        int saleId = sale.Id;
+                        int productId = int.Parse(dataGridViewProduct.Rows[e.RowIndex].Cells[0].Value.ToString());
+                        decimal price = decimal.Parse(dataGridViewProduct.Rows[e.RowIndex].Cells[3].Value.ToString());
+
+                        try {
+                            // salva no banco
+                            SaleItem.Insert(saleId, productId, quantity, price);
+
+                            // cria um novo objeto SaleItem 
+                            SaleItem item = new SaleItem(saleId, productId, quantity, price);
+
+                            // adiciona a lista de SaleItem um novo objeto
+                            saleItems.Add(item);
+
+                            // atualiza o valor do objeto sale
+                            sale.Amount = sale.Amount + (quantity * price);
+
+                            decimal totalValue = 0;
+                            int nItems = 0;
+
+                            foreach (SaleItem items in saleItems) {
+                                totalValue += (items.Quantity * items.Price);
+                                nItems += items.Quantity;
+                            }
+
+                            sale.Amount = totalValue;
+
+                            MessageBox.Show("Item adicionado!");
+                            label21.Text = nItems.ToString();
+                            label23.Text = sale.Amount.ToString();
+
+                            DataTable dt = ConvertToDataTable(saleItems);
+                            dataGridViewSale.DataSource = dt;
+                        } catch (Exception ex) {
+                            MessageBox.Show("Erro: " + ex.Message);
+                        }
                     }
                 }
 
             } else {
                 MessageBox.Show("Operação cancelada.");
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            if (saleItems.Count > 0) {
+                HidePage(tabProduct);
+                ShowPage(tabPayment);
+
+                int nItems = 0;
+
+                foreach (SaleItem item in saleItems) {
+                    nItems += item.Quantity;
+                }
+
+                label17.Text = sale.Id.ToString();
+                label14.Text = client.Name;
+                label16.Text = client.Address;
+                label20.Text = nItems.ToString();
+                label12.Text = sale.Amount.ToString();
+            } else {
+                MessageBox.Show("Adicione ao menos um item para continuar.");
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e) {
+            if (comboBox1.SelectedIndex > 0) {
+                try {
+                    Sale.UpdateCheckout(sale.Id, sale.Amount, sale.Payment);
+
+                    int nItems = 0;
+
+                    // para cada item em saleItems
+                    foreach (var item in saleItems) {
+                        // atualiza o estoque
+                        Product.UpdateStock(item.Product_Id, item.Quantity);
+
+                        nItems += item.Quantity;
+                    }
+
+                    string resume =
+                    "Venda #" + sale.Id.ToString() + " - " + sale.Created_At.ToString() + "\n" +
+                    "Cliente: " + client.Name + "\n" +
+                    "Total de Itens: " + nItems.ToString() + "\n" +
+                    "Forma de Pagamento: " + sale.Payment + "\n" +
+                    "Total da Compra: " + sale.Amount.ToString() + "\n";
+
+                    MessageBox.Show(resume);
+                    this.Close();
+
+                } catch (Exception ex) {
+                    MessageBox.Show("Erro: " + ex.Message);
+                }
+            } else {
+                MessageBox.Show("Selecione a forma de pagamento.");
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {            
+            string selectedItem = comboBox1.Text;
+
+            sale.Payment = selectedItem;
         }
     }
 }

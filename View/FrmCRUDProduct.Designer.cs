@@ -143,9 +143,10 @@
             // 
             // button2
             // 
+            button2.Anchor = AnchorStyles.None;
             button2.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.FromArgb(192, 0, 0);
-            button2.Location = new Point(209, 397);
+            button2.Location = new Point(209, 396);
             button2.Name = "button2";
             button2.Size = new Size(219, 36);
             button2.TabIndex = 20;
